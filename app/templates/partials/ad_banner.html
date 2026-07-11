@@ -1,0 +1,117 @@
+<!-- Ad Banner -->
+<div class="ad-banner-wrapper" id="ad-banner">
+    <div class="ad-banner-container">
+        <div class="ad-content">
+            <div class="ad-label">Sponsored</div>
+            <div class="ad-placeholder">
+                <i class="fas fa-ad"></i>
+                <span>Ad Placeholder - Google AdMob</span>
+            </div>
+            <div class="ad-close" onclick="closeAd()">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .ad-banner-wrapper {
+        position: fixed;
+        bottom: 60px;
+        left: 0;
+        right: 0;
+        z-index: 1030;
+        padding: 8px 12px;
+        background: rgba(10, 10, 26, 0.95);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+    }
+    .ad-banner-wrapper.hidden {
+        transform: translateY(100%);
+        opacity: 0;
+        pointer-events: none;
+    }
+    .ad-banner-container {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    .ad-content {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 8px;
+        padding: 8px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        position: relative;
+        min-height: 50px;
+    }
+    .ad-label {
+        font-size: 0.5rem;
+        color: #667;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        position: absolute;
+        top: -6px;
+        left: 12px;
+        background: rgba(10, 10, 26, 0.95);
+        padding: 0 6px;
+    }
+    .ad-placeholder {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: #556;
+        font-size: 0.7rem;
+        padding: 4px 0;
+    }
+    .ad-placeholder i {
+        font-size: 1.2rem;
+        color: #445;
+    }
+    .ad-close {
+        color: #667;
+        cursor: pointer;
+        padding: 4px 8px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        font-size: 0.8rem;
+    }
+    .ad-close:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.05);
+    }
+    /* For premium users - hide ads */
+    body.premium-user .ad-banner-wrapper {
+        display: none !important;
+    }
+    @media (min-width: 768px) {
+        .ad-banner-wrapper {
+            bottom: 0;
+        }
+    }
+</style>
+
+<script>
+    function closeAd() {
+        document.getElementById('ad-banner').classList.add('hidden');
+        // Store preference in localStorage
+        localStorage.setItem('ad_closed', 'true');
+    }
+    
+    // Check if ad was closed before
+    document.addEventListener('DOMContentLoaded', function() {
+        if (localStorage.getItem('ad_closed') === 'true') {
+            document.getElementById('ad-banner').classList.add('hidden');
+        }
+        // Show ad after 30 seconds if not closed
+        setTimeout(function() {
+            if (localStorage.getItem('ad_closed') !== 'true') {
+                document.getElementById('ad-banner').classList.remove('hidden');
+            }
+        }, 30000);
+    });
+</script>

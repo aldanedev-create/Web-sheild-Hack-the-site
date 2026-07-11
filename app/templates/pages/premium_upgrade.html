@@ -1,0 +1,299 @@
+{% extends "base.html" %}
+
+{% block title %}Premium - WebShield Scanner{% endblock %}
+
+{% block extra_css %}
+<style>
+    .premium-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px 0;
+    }
+    .premium-hero {
+        text-align: center;
+        padding: 30px 20px;
+        background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(245, 124, 0, 0.05));
+        border-radius: 16px;
+        border: 1px solid rgba(255, 215, 0, 0.1);
+        margin-bottom: 25px;
+    }
+    .premium-hero .crown {
+        font-size: 4rem;
+        color: #ffd700;
+        margin-bottom: 10px;
+    }
+    .premium-hero h2 {
+        font-family: 'Orbitron', monospace;
+        color: #ffd700;
+        font-weight: 900;
+    }
+    .premium-hero .sub {
+        color: #8899aa;
+        font-size: 1rem;
+    }
+    .price-card {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 16px;
+        padding: 25px;
+        border: 2px solid rgba(255, 215, 0, 0.1);
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    .price-card .price {
+        font-family: 'Orbitron', monospace;
+        font-size: 3rem;
+        font-weight: 900;
+        color: #ffd700;
+    }
+    .price-card .period {
+        color: #8899aa;
+        font-size: 0.9rem;
+    }
+    .price-card .savings {
+        background: rgba(255, 215, 0, 0.1);
+        color: #ffd700;
+        padding: 4px 16px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        display: inline-block;
+        margin-top: 5px;
+    }
+    .features-list {
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 12px;
+        padding: 20px;
+        margin: 20px 0;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .features-list .feature {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .features-list .feature:last-child {
+        border-bottom: none;
+    }
+    .features-list .feature .icon {
+        color: #ffd700;
+        font-size: 1.1rem;
+        width: 24px;
+    }
+    .features-list .feature .text {
+        color: #ccd;
+        font-size: 0.9rem;
+    }
+    .features-list .feature .text .highlight {
+        color: #ffd700;
+        font-weight: 600;
+    }
+    .btn-upgrade {
+        width: 100%;
+        padding: 16px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #ffd700, #f57c00);
+        border: none;
+        color: #fff;
+        transition: all 0.3s ease;
+    }
+    .btn-upgrade:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+        color: #fff;
+    }
+    .btn-upgrade:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+    }
+    .already-premium {
+        text-align: center;
+        padding: 30px;
+        background: rgba(76, 175, 80, 0.05);
+        border-radius: 16px;
+        border: 1px solid rgba(76, 175, 80, 0.1);
+    }
+    .already-premium .icon {
+        font-size: 4rem;
+        color: #4caf50;
+        margin-bottom: 10px;
+    }
+    .already-premium h3 {
+        color: #4caf50;
+    }
+    .cancel-sub {
+        text-align: center;
+        margin-top: 15px;
+    }
+    .cancel-sub .btn-cancel {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #ff6b6b;
+        padding: 8px 20px;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+    }
+    .cancel-sub .btn-cancel:hover {
+        background: rgba(255, 0, 0, 0.1);
+        border-color: #ff4444;
+    }
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        font-size: 0.85rem;
+    }
+    .comparison-table th {
+        padding: 10px;
+        text-align: left;
+        color: #8899aa;
+        font-weight: 600;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .comparison-table td {
+        padding: 10px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        color: #ccd;
+    }
+    .comparison-table .check {
+        color: #4caf50;
+    }
+    .comparison-table .cross {
+        color: #f44336;
+    }
+    .comparison-table .premium-highlight {
+        color: #ffd700;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="premium-container">
+    {% if current_user.is_authenticated and current_user.is_premium() %}
+    <!-- Already Premium -->
+    <div class="already-premium">
+        <div class="icon"><i class="fas fa-crown"></i></div>
+        <h3>You're a Premium User!</h3>
+        <p style="color: #8899aa;">Enjoy unlimited scans, PDF reports, and all premium features.</p>
+        {% if current_user.subscription.first() %}
+            <p style="font-size: 0.8rem; color: #667; margin-top: 10px;">
+                Plan: {{ current_user.subscription.first().plan|capitalize }} | 
+                Expires: {{ current_user.subscription.first().expires_at.strftime('%Y-%m-%d') if current_user.subscription.first().expires_at else 'Never' }}
+            </p>
+        {% endif %}
+        <div class="cancel-sub">
+            <button class="btn-cancel" onclick="cancelSubscription()">
+                <i class="fas fa-times"></i> Cancel Subscription
+            </button>
+        </div>
+    </div>
+    {% else %}
+    <!-- Upgrade -->
+    <div class="premium-hero">
+        <div class="crown"><i class="fas fa-crown"></i></div>
+        <h2>Go Premium</h2>
+        <div class="sub">Unlock the full power of WebShield Scanner</div>
+    </div>
+    
+    <div class="price-card">
+        <div class="price">$5</div>
+        <div class="period">per month</div>
+        <div class="savings">🔥 Cancel anytime</div>
+    </div>
+    
+    <div class="features-list">
+        <div class="feature">
+            <span class="icon"><i class="fas fa-check-circle"></i></span>
+            <span class="text"><span class="highlight">Unlimited</span> scans</span>
+        </div>
+        <div class="feature">
+            <span class="icon"><i class="fas fa-check-circle"></i></span>
+            <span class="text"><span class="highlight">PDF</span> report export</span>
+        </div>
+        <div class="feature">
+            <span class="icon"><i class="fas fa-check-circle"></i></span>
+            <span class="text"><span class="highlight">Ad-free</span> experience</span>
+        </div>
+        <div class="feature">
+            <span class="icon"><i class="fas fa-check-circle"></i></span>
+            <span class="text"><span class="highlight">Authenticated</span> scanning</span>
+        </div>
+        <div class="feature">
+            <span class="icon"><i class="fas fa-check-circle"></i></span>
+            <span class="text"><span class="highlight">Advanced</span> crawling</span>
+        </div>
+        <div class="feature">
+            <span class="icon"><i class="fas fa-check-circle"></i></span>
+            <span class="text"><span class="highlight">Security trend</span> tracking</span>
+        </div>
+        <div class="feature">
+            <span class="icon"><i class="fas fa-check-circle"></i></span>
+            <span class="text"><span class="highlight">Full learning center</span> access</span>
+        </div>
+        <div class="feature">
+            <span class="icon"><i class="fas fa-check-circle"></i></span>
+            <span class="text"><span class="highlight">Priority</span> support</span>
+        </div>
+    </div>
+    
+    <table class="comparison-table">
+        <tr>
+            <th>Feature</th>
+            <th>Free</th>
+            <th>Premium</th>
+        </tr>
+        <tr>
+            <td>Scans per day</td>
+            <td>5</td>
+            <td><span class="premium-highlight">Unlimited</span></td>
+        </tr>
+        <tr>
+            <td>PDF Reports</td>
+            <td><span class="cross"><i class="fas fa-times"></i></span></td>
+            <td><span class="check"><i class="fas fa-check"></i></span></td>
+        </tr>
+        <tr>
+            <td>Ads</td>
+            <td><span class="cross"><i class="fas fa-times"></i></span></td>
+            <td><span class="check"><i class="fas fa-check"></i></span></td>
+        </tr>
+        <tr>
+            <td>Authenticated Scanning</td>
+            <td><span class="cross"><i class="fas fa-times"></i></span></td>
+            <td><span class="check"><i class="fas fa-check"></i></span></td>
+        </tr>
+        <tr>
+            <td>Advanced Crawling</td>
+            <td><span class="cross"><i class="fas fa-times"></i></span></td>
+            <td><span class="check"><i class="fas fa-check"></i></span></td>
+        </tr>
+        <tr>
+            <td>Security Trends</td>
+            <td><span class="cross"><i class="fas fa-times"></i></span></td>
+            <td><span class="check"><i class="fas fa-check"></i></span></td>
+        </tr>
+        <tr>
+            <td>Learning Center (Full)</td>
+            <td><span class="cross"><i class="fas fa-times"></i></span></td>
+            <td><span class="check"><i class="fas fa-check"></i></span></td>
+        </tr>
+    </table>
+    
+    <button class="btn-upgrade" id="upgrade-btn" onclick="startUpgrade()">
+        <i class="fas fa-crown"></i> Upgrade Now - $5/month
+    </button>
+    
+    <p style="text-align: center; font-size: 0.7rem; color: #667; margin-top: 15px;">
+        <i class="fas fa-lock"></i> Secure payment powered by Stripe
+    </p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/premium.js') }}"></script>
+{% endblock %}
