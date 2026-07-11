@@ -49,6 +49,9 @@ WebShield Scanner is a cybersecurity learning and authorized penetration testing
 
 ## Project Structure
 
+# WebShield Scanner — Project Structure
+
+```
 webshield-scanner/
 │
 ├── README.md
@@ -170,45 +173,45 @@ webshield-scanner/
 │   │   │       ├── premium_badge.html
 │   │   │       └── scan_card.html
 │   │   │
-│   │   ├── static/
-│   │   │   ├── css/
-│   │   │   │   ├── main.css
-│   │   │   │   ├── auth.css
-│   │   │   │   ├── dashboard.css
-│   │   │   │   ├── scanner.css
-│   │   │   │   ├── reports.css
-│   │   │   │   ├── learning.css
-│   │   │   │   └── mobile.css
-│   │   │   │
-│   │   │   ├── js/
-│   │   │   │   ├── app.js
-│   │   │   │   ├── auth.js
-│   │   │   │   ├── dashboard.js
-│   │   │   │   ├── new-scan.js
-│   │   │   │   ├── scan-progress.js
-│   │   │   │   ├── report-details.js
-│   │   │   │   ├── attack-surface-map.js
-│   │   │   │   ├── learning-center.js
-│   │   │   │   ├── premium.js
-│   │   │   │   ├── settings.js
-│   │   │   │   └── api.js
-│   │   │   │
-│   │   │   ├── js/three/
-│   │   │   │   ├── cyber-grid.js
-│   │   │   │   ├── splash-animation.js
-│   │   │   │   ├── scanner-animation.js
-│   │   │   │   └── network-map.js
-│   │   │   │
-│   │   │   ├── images/
-│   │   │   │   ├── logo.png
-│   │   │   │   ├── shield.png
-│   │   │   │   └── icons/
-│   │   │   │
-│   │   │   ├── uploads/
-│   │   │   ├── reports/
-│   │   │   └── vendor/
-│   │   │       ├── bootstrap/
-│   │   │       └── three/
+│   │   └── static/
+│   │       ├── css/
+│   │       │   ├── main.css
+│   │       │   ├── auth.css
+│   │       │   ├── dashboard.css
+│   │       │   ├── scanner.css
+│   │       │   ├── reports.css
+│   │       │   ├── learning.css
+│   │       │   └── mobile.css
+│   │       │
+│   │       ├── js/
+│   │       │   ├── app.js
+│   │       │   ├── auth.js
+│   │       │   ├── dashboard.js
+│   │       │   ├── new-scan.js
+│   │       │   ├── scan-progress.js
+│   │       │   ├── report-details.js
+│   │       │   ├── attack-surface-map.js
+│   │       │   ├── learning-center.js
+│   │       │   ├── premium.js
+│   │       │   ├── settings.js
+│   │       │   ├── api.js
+│   │       │   │
+│   │       │   └── three/
+│   │       │       ├── cyber-grid.js
+│   │       │       ├── splash-animation.js
+│   │       │       ├── scanner-animation.js
+│   │       │       └── network-map.js
+│   │       │
+│   │       ├── images/
+│   │       │   ├── logo.png
+│   │       │   ├── shield.png
+│   │       │   └── icons/
+│   │       │
+│   │       ├── uploads/
+│   │       ├── reports/
+│   │       └── vendor/
+│   │           ├── bootstrap/
+│   │           └── three/
 │   │
 │   ├── migrations/
 │   ├── instance/
@@ -296,7 +299,7 @@ webshield-scanner/
     ├── run_dev.sh
     ├── build_mobile.sh
     └── export_report_sample.py
-
+```
 
 webshield-scanner/
 ├── backend/ # Flask backend application
