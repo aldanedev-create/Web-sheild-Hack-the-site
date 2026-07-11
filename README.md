@@ -51,6 +51,20 @@ WebShield Scanner is a cybersecurity learning and authorized penetration testing
 
 # WebShield Scanner — Project Structure
 
+# WebShield Scanner — Project Structure
+
+## Overview
+
+```
+webshield-scanner/
+├── backend/          # Flask backend application
+├── mobile-wrapper/    # React + Capacitor mobile app
+├── docs/              # Project documentation
+└── scripts/           # Utility scripts
+```
+
+## Full Structure
+
 ```
 webshield-scanner/
 │
@@ -300,13 +314,6 @@ webshield-scanner/
     ├── build_mobile.sh
     └── export_report_sample.py
 ```
-
-webshield-scanner/
-├── backend/ # Flask backend application
-├── mobile-wrapper/ # React + Capacitor mobile app
-├── docs/ # Project documentation
-└── scripts/ # Utility scripts
-
 text
 
 ## Quick Start
